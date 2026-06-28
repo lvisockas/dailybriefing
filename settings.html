@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Settings — Daily Briefings</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="app.webmanifest" />
+  <meta name="theme-color" content="#c96442" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Briefings" />
 </head>
 <body>
   <header class="topbar">
@@ -16,6 +22,20 @@
   </header>
 
   <main class="settings">
+    <section class="panel">
+      <h2>App &amp; pranešimai</h2>
+      <p class="hint">
+        Įsidiek į pradžios ekraną ir įjunk pranešimus — gausi žinutę, kai
+        pasirodys naujas briefingas.
+      </p>
+      <div class="controls">
+        <button id="btn-install" class="btn" hidden>Įdiegti programėlę</button>
+        <button id="btn-enable-notify" class="btn">Įjungti pranešimus</button>
+        <button id="btn-check-now" class="btn ghost">Tikrinti dabar</button>
+      </div>
+      <p id="pwa-status" class="status muted">tikrinama&hellip;</p>
+    </section>
+
     <section class="panel">
       <h2>Routine</h2>
       <dl id="meta" class="meta-grid">
@@ -46,5 +66,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   <script src="settings.js"></script>
+  <script src="pwa.js"></script>
 </body>
 </html>
