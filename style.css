@@ -49,6 +49,26 @@ html, body {
   margin: 0;
   white-space: nowrap;
 }
+/* ---- nav ---- */
+.nav {
+  display: flex;
+  gap: 0.25rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid transparent;
+}
+.nav a:hover { color: var(--fg); }
+.nav a.active {
+  color: var(--fg);
+  border-color: var(--line);
+  background: var(--sel);
+}
+
 #search {
   margin-left: auto;
   font-family: var(--mono);
@@ -148,9 +168,86 @@ html, body {
 
 .muted { color: var(--muted); font-family: var(--mono); font-size: 0.8rem; padding: 1rem 1.25rem; }
 
+/* ---- settings page ---- */
+.settings {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1.25rem, 5vw, 2.5rem) 5rem;
+}
+.panel { margin-bottom: 2.5rem; }
+.panel > h2 {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.4rem;
+  margin: 0 0 1rem;
+}
+.hint {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.hint code, .hint a code { font-size: 0.95em; }
+.hint a, .panel a { color: inherit; }
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  margin: 0 0 1rem;
+}
+.meta-grid dt { color: var(--muted); }
+.meta-grid dd { margin: 0; }
+
+/* ---- flow ---- */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+.step {
+  flex: 1 1 140px;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  padding: 0.75rem 0.85rem;
+  background: var(--sel);
+}
+.step-n {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.step-title {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.step-desc {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.flow-arrow {
+  align-self: center;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
 /* ---- mobile ---- */
 @media (max-width: 720px) {
   .layout { grid-template-columns: 1fr; height: auto; }
   .list { border-right: 0; border-bottom: 1px solid var(--line); max-height: 40vh; }
   .reader { max-width: 100%; }
+  .flow { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); }
 }

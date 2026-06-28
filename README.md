@@ -28,12 +28,27 @@ git push
 | `index.html`          | Page shell: top bar, list, reader pane.                     |
 | `style.css`           | Minimal monospace/serif "markdown reader" styling.          |
 | `app.js`              | Loads `manifest.json`, renders the feed and reader.         |
+| `settings.html` / `settings.js` | Settings page: routine flow + the live prompt.    |
+| `prompt.md`           | The exact prompt the daily routine runs (source of truth).  |
 | `briefings/*.md`      | One markdown file per briefing.                             |
 | `manifest.json`       | Generated index of briefings (date, title, summary).        |
 | `generate_manifest.py`| Rebuilds `manifest.json` by scanning `briefings/`.          |
 | `.github/workflows/`  | Rebuilds the manifest and deploys to Pages on every push.   |
 
 Markdown is rendered client-side with [marked](https://marked.js.org/) from a CDN.
+
+## The daily routine
+
+A scheduled Claude routine writes a new briefing each day. Its instructions live
+in [`prompt.md`](prompt.md) — that single file is the source of truth:
+
+- The routine **runs** `prompt.md`.
+- The [**Settings** page](https://lvisockas.github.io/dailybriefing/settings.html)
+  **fetches and renders** the same `prompt.md` at load time, and auto-generates
+  the **Flow** diagram from its `## Pipeline` steps.
+
+So the flow and prompt shown on the site can never drift from what actually runs —
+edit `prompt.md`, push, and both the routine and the Settings page update together.
 
 ## Run locally
 

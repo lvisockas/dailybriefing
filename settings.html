@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Settings — Daily Briefings</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>&#9632; Daily Briefings</h1>
+    <nav class="nav">
+      <a href="index.html">feed</a>
+      <a href="settings.html" class="active">settings</a>
+    </nav>
+  </header>
+
+  <main class="settings">
+    <section class="panel">
+      <h2>Routine</h2>
+      <dl id="meta" class="meta-grid">
+        <dt>status</dt><dd class="muted">loading&hellip;</dd>
+      </dl>
+      <p class="hint">
+        This page renders <a href="prompt.md"><code>prompt.md</code></a> live from the
+        repo. The daily routine runs that same file, so the flow and prompt shown
+        here are always in sync with what actually runs.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Flow</h2>
+      <p class="hint">Auto-generated from the <strong>Pipeline</strong> steps in <code>prompt.md</code>.</p>
+      <div id="flow" class="flow"><span class="muted">loading&hellip;</span></div>
+    </section>
+
+    <section class="panel">
+      <h2>Prompt</h2>
+      <p class="hint">
+        Source of truth &middot;
+        <a id="raw-link" href="prompt.md">view raw</a>
+      </p>
+      <article id="prompt" class="reader"><span class="muted">loading&hellip;</span></article>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
