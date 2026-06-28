@@ -1,7 +1,7 @@
 /* Daily Briefings — service worker */
 "use strict";
 
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL = "db-shell-" + VERSION;
 const META = "db-meta";
 
@@ -44,8 +44,11 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // let CDN (marked) pass through
 
+  // {cache:"no-cache"} forces revalidation against the server (ETag → 304 when
+  // unchanged) instead of silently reusing a stale HTTP-cached copy. Using the
+  // URL (not the Request) avoids the disallowed mode:"navigate" copy.
   e.respondWith(
-    fetch(req)
+    fetch(req.url, { cache: "no-cache", credentials: "same-origin" })
       .then((res) => {
         if (res && res.ok) {
           const copy = res.clone();
