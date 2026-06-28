@@ -1,7 +1,7 @@
 /* Daily Briefings — service worker */
 "use strict";
 
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL = "db-shell-" + VERSION;
 const META = "db-meta";
 
@@ -19,7 +19,11 @@ const SHELL_ASSETS = [
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open(SHELL).then((c) => c.addAll(SHELL_ASSETS)).then(() => self.skipWaiting())
+    caches.open(SHELL).then((c) =>
+      // {cache:"reload"} forces these through the network so we never seed the
+      // cache with a stale copy from the HTTP cache.
+      c.addAll(SHELL_ASSETS.map((u) => new Request(u, { cache: "reload" })))
+    ).then(() => self.skipWaiting())
   );
 });
 
@@ -31,41 +35,25 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-/* Network-first for the feed data (always want today's briefing), cache-first
-   for the static shell. */
-function isDynamic(url) {
-  return url.pathname.endsWith("/manifest.json") || url.pathname.includes("/briefings/");
-}
-
+/* Network-first for everything same-origin: always serve the freshest file
+   when online, fall back to the cache only when offline. The cache is an
+   offline safety net, never a source of staleness. */
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // let CDN (marked) pass through
 
-  if (isDynamic(url)) {
-    e.respondWith(
-      fetch(req)
-        .then((res) => {
+  e.respondWith(
+    fetch(req)
+      .then((res) => {
+        if (res && res.ok) {
           const copy = res.clone();
           caches.open(SHELL).then((c) => c.put(req, copy));
-          return res;
-        })
-        .catch(() => caches.match(req))
-    );
-    return;
-  }
-
-  e.respondWith(
-    caches.match(req).then((cached) => {
-      const network = fetch(req)
-        .then((res) => {
-          caches.open(SHELL).then((c) => c.put(req, res.clone()));
-          return res;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+        }
+        return res;
+      })
+      .catch(() => caches.match(req).then((c) => c || caches.match("./index.html")))
   );
 });
 
