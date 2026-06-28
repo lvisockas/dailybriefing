@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Briefings</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>&#9632; Daily Briefings</h1>
+    <input id="search" type="search" placeholder="filter briefings&hellip;" autocomplete="off" />
+  </header>
+
+  <main class="layout">
+    <nav id="list" class="list" aria-label="Briefings">
+      <p class="muted">Loading&hellip;</p>
+    </nav>
+
+    <article id="reader" class="reader">
+      <p class="muted">Select a briefing.</p>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
