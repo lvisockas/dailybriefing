@@ -35,32 +35,43 @@ function setupControls() {
   const checkBtn = document.getElementById("btn-check-now");
   if (!statusEl) return; // not the settings page
 
-  const lines = [];
-  const setStatus = () => (statusEl.innerHTML = lines.join("<br>"));
-  const say = (msg) => { lines.push(msg); setStatus(); };
+  let extra = ""; // transient message from the last action
+  const say = (msg) => { extra = msg; render(); };
 
-  // install state
-  if (isStandalone()) {
-    say("✓ Įdiegta (veikia kaip programėlė).");
-    if (installBtn) installBtn.hidden = true;
-  } else if (installBtn) {
-    installBtn.hidden = false;
-    installBtn.disabled = true;
-    installBtn.textContent = "Įdiegti programėlę";
+  function render() {
+    const parts = [];
+
+    // install line
+    if (isStandalone()) parts.push("✓ Įdiegta — veikia kaip programėlė.");
+    else if (deferredPrompt) parts.push("• Galima įdiegti (mygtukas viršuje).");
+    else parts.push("• Įdiegimas: naršyklės meniu › „Add to Home Screen“.");
+
+    // notification line
+    const p = "Notification" in window ? Notification.permission : "unsupported";
+    if (p === "granted") parts.push("✓ Pranešimai įjungti.");
+    else if (p === "denied") parts.push("✗ Pranešimai užblokuoti naršyklės nustatymuose.");
+    else if (p === "unsupported") parts.push("✗ Naršyklė nepalaiko pranešimų.");
+    else parts.push("• Pranešimai: dar neįjungti.");
+
+    if (extra) parts.push(extra);
+    statusEl.innerHTML = parts.join("<br>");
   }
+
+  // install button visibility
+  if (isStandalone() && installBtn) installBtn.hidden = true;
+  else if (installBtn) { installBtn.hidden = false; installBtn.disabled = true; }
 
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if (installBtn && !isStandalone()) {
-      installBtn.hidden = false;
-      installBtn.disabled = false;
-    }
+    if (installBtn && !isStandalone()) { installBtn.hidden = false; installBtn.disabled = false; }
+    render();
   });
 
   window.addEventListener("appinstalled", () => {
-    say("✓ Programėlė įdiegta. Įjunk pranešimus žemiau.");
+    deferredPrompt = null;
     if (installBtn) installBtn.hidden = true;
+    say("✓ Programėlė įdiegta. Įjunk pranešimus.");
   });
 
   if (installBtn) {
@@ -74,17 +85,13 @@ function setupControls() {
     });
   }
 
-  // notification state
+  // notification button state
   const perm = "Notification" in window ? Notification.permission : "unsupported";
-  if (perm === "granted") {
-    say("✓ Pranešimai įjungti.");
-    if (notifyBtn) notifyBtn.textContent = "Pranešimai įjungti";
-  } else if (perm === "denied") {
-    say("✗ Pranešimai užblokuoti naršyklės nustatymuose.");
-  } else if (perm === "unsupported") {
-    say("Ši naršyklė nepalaiko pranešimų.");
-    if (notifyBtn) notifyBtn.disabled = true;
+  if (notifyBtn) {
+    if (perm === "granted") { notifyBtn.textContent = "Pranešimai įjungti"; notifyBtn.disabled = true; }
+    else if (perm === "unsupported") notifyBtn.disabled = true;
   }
+  render(); // initial status
 
   if (notifyBtn) {
     notifyBtn.addEventListener("click", async () => {
