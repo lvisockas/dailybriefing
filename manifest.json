@@ -1,8 +1,44 @@
 [
   {
+    "file": "briefings/2026-07-07.md",
+    "date": "2026-07-07",
+    "title": "Antradienio briefingas",
+    "summary": "Elon Muskas paskelb\u0117, kad \u201eGrok Imagine\" vaizdo generavimo funkcija baigta (2026-07-05)"
+  },
+  {
+    "file": "briefings/2026-07-06.md",
+    "date": "2026-07-06",
+    "title": "Pirmadienio briefingas",
+    "summary": "Tesla paleido visi\u0161kai autonomi\u0161k\u0105 \u201eRobotaxi\" paslaug\u0105 Majamyje (2026-07-03)"
+  },
+  {
+    "file": "briefings/2026-07-02.md",
+    "date": "2026-07-02",
+    "title": "Ketvirtadienio briefingas",
+    "summary": "Anthropic pristat\u0117 Claude Sonnet 5 \u2014 nauj\u0105 numatyt\u0105j\u012f model\u012f (2026-06-29)"
+  },
+  {
+    "file": "briefings/2026-07-01.md",
+    "date": "2026-07-01",
+    "title": "Tre\u010diadienio briefingas",
+    "summary": "Kalifornija tapo pirm\u0105ja JAV valstija, pasira\u0161iusia oficial\u0173 susitarim\u0105 su"
+  },
+  {
+    "file": "briefings/2026-06-30.md",
+    "date": "2026-06-30",
+    "title": "Antradienio briefingas",
+    "summary": "Muskas paskelb\u0117: \u201eGrok 4.5\" priva\u010dioje beta versijoje SpaceX ir Tesla viduje,"
+  },
+  {
+    "file": "briefings/2026-06-29.md",
+    "date": "2026-06-29",
+    "title": "Pirmadienio briefingas",
+    "summary": "JAV vyriausyb\u0117 at\u0161auk\u0117 eksporto kontrol\u0117s blokad\u0105 \u201eClaude Mythos 5\"; modelis"
+  },
+  {
     "file": "briefings/2026-06-28.md",
     "date": "2026-06-28",
-    "title": "Prad\u017eia",
-    "summary": "\u0160is kanalas paruo\u0161tas. Nuo rytojaus kasdienis Claude routine \u010dia kels naujien\u0173"
+    "title": "Sekmadienio briefingas",
+    "summary": "Grok 4.5 \u012f\u017eengia \u012f privat\u0173 beta testavim\u0105 SpaceX ir Tesla (2026-06-28)"
   }
 ]
